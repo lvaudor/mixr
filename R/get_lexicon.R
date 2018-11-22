@@ -39,7 +39,7 @@
 #' @examples
 #' fr_expr=get_lexicon("fr")
 get_lexicon=function(language="fr"){
-  root=find.package("linkR")
+  root=find.package("mixr")
   lexicon <- suppressMessages(suppressWarnings(
     readr::read_delim(stringr::str_c(root,
                                      "/dictionnaires/lexique_",
