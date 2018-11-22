@@ -1,0 +1,8 @@
+"et al."	"et_al"	"sw"
+"hier hinter"	"hier_hinter"	"sw"
+"u. ä."	"u_ä"	"sw"
+"univ.-prof."	"univ_prof"	"sw"
+"darüber hinaus"	"darüber_hinaus"	"sw"
+"so genannte"	"so_genannte"	"sw"
+"so genannten"	"so_genannten"	"sw"
+"so genannte"	"so_genannte"	"sw"
