@@ -11,7 +11,7 @@ tidy_specificities(data, cat1, cat2)
 
 \item{cat1}{a category}
 
-\item{cat2}{a factor describing corresponding to words or lemmas}
+\item{cat2}{a factor corresponding to words or lemmas}
 }
 \value{
 tibble with additional columns cat1, cat2, spec

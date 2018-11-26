@@ -1,7 +1,7 @@
 #' Returns a tibble with specificities according to two crossed categories.
 #' @param data a tibble
 #' @param cat1 a category
-#' @param cat2 a factor describing corresponding to words or lemmas
+#' @param cat2 a factor corresponding to words or lemmas
 #' @return tibble with additional columns cat1, cat2, spec
 #' @export
 #' @examples
@@ -19,13 +19,8 @@ tidy_specificities=function(data,cat1,cat2){
   spe=tidyr::gather(spe,
                     "cat2","spec",
                     -cat1)
-  data <- data %>%
-    mutate(cat1=!!qcat1,
-           cat2=!!qcat2) %>%
-    as_tibble()
-  mode(spe$cat1) <- mode(data$cat1)
-  mode(spe$cat2) <- mode(data$cat2)
-  data <- data%>%
-    left_join(spe,by=c("cat1","cat2"))
-  return(data)
+  mode(spe$cat1)=mode(vcat1)
+  mode(spe$cat2)=mode(vcat2)
+  colnames(spe)=c(colnames(select(data,!!qcat1,!!qcat2)),"spec")
+  return(spe)
 }
