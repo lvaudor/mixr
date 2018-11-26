@@ -5,7 +5,7 @@
 \title{Plot specificities of cat1 (lemma or word) according to cat2 (categories)}
 \usage{
 plot_specificities(spec_data, cat1, cat2, criterion = "top_n", top_n = 50,
-  spec_min = 2)
+  min_spec = 2)
 }
 \arguments{
 \item{cat1}{words or lemmas}
@@ -16,9 +16,9 @@ plot_specificities(spec_data, cat1, cat2, criterion = "top_n", top_n = 50,
 
 \item{top_n}{in case criterion=='top_n', how many items by category should be kept (defaults to 50)}
 
-\item{spec_min}{in case criterion=='spec_min', which is the minimum specificity for an item to be kept (defaults to 2)}
-
 \item{data}{a tibble}
+
+\item{spec_min}{in case criterion=='min_spec', which is the minimum specificity for an item to be kept (defaults to 2)}
 }
 \value{
 a plot
