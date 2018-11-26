@@ -21,10 +21,10 @@ tidy_specificities=function(data,cat1,cat2){
                     -cat1)
   data <- data %>%
     mutate(cat1=!!qcat1,
-           cat2=!!qcat2)
-  as_tibble()
+           cat2=!!qcat2) %>%
+    as_tibble()
   mode(spe$cat1) <- mode(data$cat1)
-  mode(spe$cat2) <- mode(spe$cat2)
+  mode(spe$cat2) <- mode(data$cat2)
   data <- data%>%
     left_join(spe,by=c("cat1","cat2"))
   return(data)
