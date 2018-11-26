@@ -12,9 +12,18 @@
 plot_specificities=function(spec_data,cat1, cat2, criterion="top_n", top_n=50, spec_min=2){
   cat1 <- enquo(cat1)
   cat2 <- enquo(cat2)
-  spec_data <- spec_data%>%
-    group_by(!!cat2) %>%
-    top_n(top_n,spec) %>%
+  spec_data <- spec_data %>%
+    group_by(!!cat2)
+
+  if(criterion=="top_n"){
+    spec_data <- spec_data %>%
+      top_n(top_n,spec)
+  }
+  if(criterion=="spec_min"){
+    spec_data <- spec_data %>%
+      filter(spec>spec_min)
+  }
+  spec_data <- spec_data %>%
     arrange(!!cat2,spec)%>%
     mutate(id=1:length(spec))
   p=ggplot(spec_data,
