@@ -18,7 +18,7 @@ tidy_frequencies <- function(data, cat, criterion="top_n", top_n=30, n_min=10){
       arrange(desc(n))
     if(criterion=="top_n"){
       freq_data <- freq_data %>%
-        top_n(n_min,n)
+        top_n(top_n,n)
     }
     if(criterion=="n_min"){
       freq_data <- freq_data %>%
