@@ -22,6 +22,12 @@ tidy_specificities=function(data,cat1,cat2, criterion="all", top_n=50, min_spec=
                !!qcat1) %>% pull(1)
   vcat2=select(data,
                !!qcat2) %>% pull(1)
+  freqs=data %>%
+    group_by(!!qcat1,!!qcat2) %>%
+    summarise(n=n()) %>%
+    select(cat1=!!qcat1,
+           cat2=!!qcat2,
+           n)
   spe=specificities(table(vcat1,vcat2))
   spe=bind_cols(cat1=row.names(spe),as_tibble(spe))
   spe=tidyr::gather(spe,
@@ -29,7 +35,8 @@ tidy_specificities=function(data,cat1,cat2, criterion="all", top_n=50, min_spec=
                     -cat1)
   mode(spe$cat1)=mode(vcat1)
   mode(spe$cat2)=mode(vcat2)
-  colnames(spe)=c(colnames(select(data,!!qcat1,!!qcat2)),"spec")
+  spe <- spe %>% left_join(freqs, by=c("cat1","cat2"))
+  colnames(spe)=c(colnames(select(data,!!qcat1,!!qcat2)),"spec","n")
   cat1 <- enquo(cat1)
   cat2 <- enquo(cat2)
 
