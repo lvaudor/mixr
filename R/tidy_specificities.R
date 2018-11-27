@@ -32,11 +32,12 @@ tidy_specificities=function(data,cat1,cat2, criterion="all", top_n=50, min_spec=
   colnames(spe)=c(colnames(select(data,!!qcat1,!!qcat2)),"spec")
   cat1 <- enquo(cat1)
   cat2 <- enquo(cat2)
-  spe <- spe%>%
-    group_by(!!cat2)
+
   if(criterion=="top_n"){
     spe <- spe %>%
-      top_n(top_n,spec)
+      group_by(!!cat2) %>%
+      top_n(top_n,spec) %>%
+      ungroup()
   }
   if(criterion=="min_spec"){
     spe <- spe %>%
