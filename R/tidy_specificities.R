@@ -1,7 +1,7 @@
 #' Returns a tibble with specificities according to two crossed categories.
 #' @param data a tibble
-#' @param cat1 a category
-#' @param cat2 a factor corresponding to words or lemmas
+#' @param cat1 a factor corresponding to words or lemmas
+#' @param cat2 a category
 #' @param criterion one of "all" (default), "top_n" or "min_spec": should the information displayed be filtered by top specificities (top_n) or according to a minimum value of specificity (min_spec).
 #' @param top_n in case criterion=='top_n', how many items by category should be kept (defaults to 50)
 #' @param min_spec in case criterion=='min_spec', which is the minimum specificity for an item to be kept (defaults to 2)

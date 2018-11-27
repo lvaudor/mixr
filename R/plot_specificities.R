@@ -21,11 +21,12 @@ plot_specificities=function(spec_data, cat1, cat2){
     arrange(!!cat2,spec)%>%
     mutate(id=1:length(spec))
   p=ggplot(spec_data,
-           aes(x=id, y=spec, fill=!!cat2))+
+           aes(x=id, y=spec, fill=factor(!!cat2)))+
     geom_bar(stat="identity", alpha=0.5)+
     geom_text(aes(label=!!cat1, y=0), hjust=0)+
     coord_flip()+
     facet_wrap(vars(!!cat2), scales="free")+
-    scale_x_discrete(breaks=NULL)
+    scale_x_discrete(breaks=NULL)+
+    theme(legend.position="none")
   return(p)
 }
