@@ -6,7 +6,7 @@ Author: Lise Vaudor
 Maintainer: Lise Vaudor <lise.vaudor@ens-lyon.fr>
 Description: Use Lexique382 dictionnaries and tidy the outputs of textometry::specificities() function.
 License: What license is it under?
-Depends: dplyr, stringr, purrr
+Depends: dplyr, stringr, purrr, ggplot2, janeaustenr, tm, textometry
 Imports: tm
 Encoding: UTF-8
 LazyData: true

@@ -4,7 +4,8 @@
 \alias{tidy_specificities}
 \title{Returns a tibble with specificities according to two crossed categories.}
 \usage{
-tidy_specificities(data, cat1, cat2)
+tidy_specificities(data, cat1, cat2, criterion = "all", top_n = 50,
+  min_spec = 2)
 }
 \arguments{
 \item{data}{a tibble}
@@ -12,6 +13,12 @@ tidy_specificities(data, cat1, cat2)
 \item{cat1}{a category}
 
 \item{cat2}{a factor corresponding to words or lemmas}
+
+\item{criterion}{one of "all" (default), "top_n" or "min_spec": should the information displayed be filtered by top specificities (top_n) or according to a minimum value of specificity (min_spec).}
+
+\item{top_n}{in case criterion=='top_n', how many items by category should be kept (defaults to 50)}
+
+\item{min_spec}{in case criterion=='min_spec', which is the minimum specificity for an item to be kept (defaults to 2)}
 }
 \value{
 tibble with additional columns cat1, cat2, spec
@@ -20,5 +27,10 @@ tibble with additional columns cat1, cat2, spec
 Returns a tibble with specificities according to two crossed categories.
 }
 \examples{
-"pouet"
+library(janeaustenr)
+df1<- tibble(txt=prideprejudice) \%>\% unnest_tokens(word,txt)
+df2<- tibble(txt=sensesensibility) \%>\% unnest_tokens(word,txt)
+df <- bind_rows(mutate(df1,novel="prideprejudice"),
+                mutate(df2,novel="sensesensibility"))
+data_spec=tidy_specificities(df, word, novel)
 }

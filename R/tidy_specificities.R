@@ -2,12 +2,20 @@
 #' @param data a tibble
 #' @param cat1 a category
 #' @param cat2 a factor corresponding to words or lemmas
+#' @param criterion one of "all" (default), "top_n" or "min_spec": should the information displayed be filtered by top specificities (top_n) or according to a minimum value of specificity (min_spec).
+#' @param top_n in case criterion=='top_n', how many items by category should be kept (defaults to 50)
+#' @param min_spec in case criterion=='min_spec', which is the minimum specificity for an item to be kept (defaults to 2)
 #' @return tibble with additional columns cat1, cat2, spec
 #' @export
 #' @examples
-#' "pouet"
+#' library(janeaustenr)
+#' df1<- tibble(txt=prideprejudice) %>% unnest_tokens(word,txt)
+#' df2<- tibble(txt=sensesensibility) %>% unnest_tokens(word,txt)
+#' df <- bind_rows(mutate(df1,novel="prideprejudice"),
+#'                 mutate(df2,novel="sensesensibility"))
+#' data_spec=tidy_specificities(df, word, novel)
 
-tidy_specificities=function(data,cat1,cat2){
+tidy_specificities=function(data,cat1,cat2, criterion="all", top_n=50, min_spec=2){
   qcat1 <- enquo(cat1)
   qcat2 <- enquo(cat2)
   vcat1=select(data,
@@ -22,5 +30,19 @@ tidy_specificities=function(data,cat1,cat2){
   mode(spe$cat1)=mode(vcat1)
   mode(spe$cat2)=mode(vcat2)
   colnames(spe)=c(colnames(select(data,!!qcat1,!!qcat2)),"spec")
+  cat1 <- enquo(cat1)
+  cat2 <- enquo(cat2)
+  spe <- spe%>%
+    group_by(!!cat2)
+  if(criterion=="top_n"){
+    spe <- spe %>%
+      top_n(top_n,spec)
+  }
+  if(criterion=="min_spec"){
+    spe <- spe %>%
+      filter(spec>min_spec)
+  }
+  spe <- spe %>%
+    arrange(desc(spec))
   return(spe)
 }

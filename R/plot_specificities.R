@@ -2,27 +2,21 @@
 #' @param data a tibble
 #' @param cat1 words or lemmas
 #' @param cat2 categories
-#' @param criterion should the information displayed be filtered by top specificities by category ('top_n') or according to a minimum value of specificity ("spec_min").
-#' @param top_n in case criterion=='top_n', how many items by category should be kept (defaults to 50)
-#' @param spec_min in case criterion=='min_spec', which is the minimum specificity for an item to be kept (defaults to 2)
 #' @return a plot
 #' @export
 #' @examples
-#' "pouet"
-plot_specificities=function(spec_data,cat1, cat2, criterion="top_n", top_n=50, min_spec=2){
+#' library(janeaustenr)
+#' df1<- tibble(txt=prideprejudice) %>% unnest_tokens(word,txt)
+#' df2<- tibble(txt=sensesensibility) %>% unnest_tokens(word,txt)
+#' df <- bind_rows(mutate(df1,novel="prideprejudice"),
+#'                 mutate(df2,novel="sensesensibility"))
+#' df_spec=tidy_specificities(df, word, novel, criterion="top_n",30)
+#' plot_specificities(df_spec, word, novel)
+plot_specificities=function(spec_data, cat1, cat2){
   cat1 <- enquo(cat1)
   cat2 <- enquo(cat2)
   spec_data <- spec_data %>%
     group_by(!!cat2)
-
-  if(criterion=="top_n"){
-    spec_data <- spec_data %>%
-      top_n(top_n,spec)
-  }
-  if(criterion=="min_spec"){
-    spec_data <- spec_data %>%
-      filter(spec>min_spec)
-  }
   spec_data <- spec_data %>%
     arrange(!!cat2,spec)%>%
     mutate(id=1:length(spec))
