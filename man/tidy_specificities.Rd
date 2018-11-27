@@ -10,9 +10,9 @@ tidy_specificities(data, cat1, cat2, criterion = "all", top_n = 50,
 \arguments{
 \item{data}{a tibble}
 
-\item{cat1}{a category}
+\item{cat1}{a factor corresponding to words or lemmas}
 
-\item{cat2}{a factor corresponding to words or lemmas}
+\item{cat2}{a category}
 
 \item{criterion}{one of "all" (default), "top_n" or "min_spec": should the information displayed be filtered by top specificities (top_n) or according to a minimum value of specificity (min_spec).}
 

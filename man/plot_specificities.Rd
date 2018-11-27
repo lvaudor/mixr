@@ -20,5 +20,11 @@ a plot
 Plot specificities of cat1 (lemma or word) according to cat2 (categories)
 }
 \examples{
-"pouet"
+library(janeaustenr)
+df1<- tibble(txt=prideprejudice) \%>\% unnest_tokens(word,txt)
+df2<- tibble(txt=sensesensibility) \%>\% unnest_tokens(word,txt)
+df <- bind_rows(mutate(df1,novel="prideprejudice"),
+                mutate(df2,novel="sensesensibility"))
+df_spec=tidy_specificities(df, word, novel, criterion="top_n",30)
+plot_specificities(df_spec, word, novel)
 }
