@@ -10,8 +10,8 @@
 #' df2<- tibble(txt=sensesensibility) %>% unnest_tokens(word,txt)
 #' df <- bind_rows(mutate(df1,novel="prideprejudice"),
 #'                 mutate(df2,novel="sensesensibility"))
-#' df_spec=tidy_specificities(df, word, novel, criterion="top_n",30)
-#' plot_specificities(df_spec, word, novel)
+#' data_spec=tidy_specificities(df, word, novel, criterion="top_n",top_n=30)
+#' plot_specificities(data_spec, word, novel)
 plot_specificities=function(spec_data, cat1, cat2){
   cat1 <- enquo(cat1)
   cat2 <- enquo(cat2)
@@ -27,6 +27,7 @@ plot_specificities=function(spec_data, cat1, cat2){
     coord_flip()+
     facet_wrap(vars(!!cat2), scales="free")+
     scale_x_discrete(breaks=NULL)+
-    theme(legend.position="none")
+    theme(legend.position="none")+
+    labs(x=cat1,y="specificity score")
   return(p)
 }

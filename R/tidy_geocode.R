@@ -1,4 +1,4 @@
-#' Returns a tibble that includes a variable describing locations, with added information corresponding to the Data Science Toolkit geocoding tool.
+#' Ads geographical information to a tibble through the use of the Data Science Toolkit geocoding tool.
 #' @param data a tibble
 #' @param location the variable to geocode
 #' @return tibble with additional columns lat, lng, country, locality, area

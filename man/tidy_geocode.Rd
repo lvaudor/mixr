@@ -2,7 +2,7 @@
 % Please edit documentation in R/tidy_geocode.R
 \name{tidy_geocode}
 \alias{tidy_geocode}
-\title{Returns a tibble that includes a variable describing locations, with added information corresponding to the Data Science Toolkit geocoding tool.}
+\title{Ads geographical information to a tibble through the use of the Data Science Toolkit geocoding tool.}
 \usage{
 tidy_geocode(data, location)
 }
@@ -15,7 +15,7 @@ tidy_geocode(data, location)
 tibble with additional columns lat, lng, country, locality, area
 }
 \description{
-Returns a tibble that includes a variable describing locations, with added information corresponding to the Data Science Toolkit geocoding tool.
+Ads geographical information to a tibble through the use of the Data Science Toolkit geocoding tool.
 }
 \examples{
 df <-tibble(loc=c("Lyon, France",

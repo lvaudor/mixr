@@ -19,7 +19,8 @@ plot_frequencies=function(data,cat, frequency, scale=NA){
     geom_bar(stat="identity", alpha=0.5, fill="turquoise")+
     geom_text(aes(label=!!qcat, y=0), hjust=0)+
     coord_flip()+
-    scale_x_discrete(breaks=NULL)
+    scale_x_discrete(breaks=NULL)+
+    labs(x=qcat,y="frequency")
   if(!is.na(scale)){
     p=p+scale_y_continuous(trans=scale)
   }
