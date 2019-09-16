@@ -18,7 +18,8 @@ tidy_geocode=function(data,
                       info=c("latlng")){
   qlocation=enquo(location)
   stringslocations=select(data,!!qlocation) %>%
-    pull(1)
+    pull(1) %>%
+    na_if("")
   result=stringslocations %>%
     map_df(geocode_each,info=info)
   result=bind_cols(data,result)
