@@ -9,11 +9,16 @@
 geocode_each=function(stringlocation,info=c("latlng")){
   url_base <- "https://maps.googleapis.com/maps/api/geocode/json?"
   if(is.na(stringlocation)){
+    #latlng
+    latlng=tibble(lat=NA,lng=NA)
+    #other info
     result=rep(NA,length(info))
     names(result)=info
-    result=bind_rows(result)
+    result=result %>%
+      bind_rows()
   }
   if(!is.na(stringlocation)){
+      # API response
       url_query <- stringlocation %>%
         str_trim() %>%
         str_replace_all(" +","+") %>%
@@ -29,6 +34,13 @@ geocode_each=function(stringlocation,info=c("latlng")){
       repcontent=rep %>%
         httr::content() %>%
         .$results
+      # latlng
+      latlng=repcontent %>%
+        .[[1]] %>%
+        .$geometry %>%
+        .$location %>%
+        as_tibble()
+      # address components
       address_components=repcontent %>%
         .[[1]] %>%
         .$address_components %>%
@@ -47,20 +59,15 @@ geocode_each=function(stringlocation,info=c("latlng")){
                                           types="country_code")) %>%
         select(name=long_name,
                types=types)
-      latlng=repcontent %>%
-        .[[1]] %>%
-        .$geometry %>%
-        .$location %>%
-        as_tibble()
       result=address_components %>%
         right_join(tibble(types=info), by="types") %>%
         select(types,name) %>%
         deframe() %>%
         bind_rows()
-      if("latlng" %in% info){
-        result=bind_cols(latlng,result) %>%
-          select(-latlng)
-      }
+  }
+  if("latlng" %in% info){
+    result=bind_cols(latlng,result) %>%
+      select(-latlng)
   }
   return(result)
 }
