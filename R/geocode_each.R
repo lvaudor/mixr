@@ -26,16 +26,16 @@ geocode_each=function(stringlocation,info=c("latlng")){
                                 collapse = "&")
       url <- str_c(url_base, url_query_inline)
       rep=httr::GET(url)
-      content=rep %>%
+      repcontent=rep %>%
         httr::content() %>%
         .$results
-      address_components=content %>%
+      address_components=repcontent %>%
         .[[1]] %>%
         .$address_components %>%
         map_df(as_tibble) %>%
         mutate(types=unlist(types)) %>%
         filter(types!="political")
-      formatted_address=content %>%
+      formatted_address=repcontent %>%
         .[[1]] %>%
         .$formatted_address
       address_components=bind_rows(address_components,
@@ -47,7 +47,7 @@ geocode_each=function(stringlocation,info=c("latlng")){
                                           types="country_code")) %>%
         select(name=long_name,
                types=types)
-      latlng=content %>%
+      latlng=repcontent %>%
         .[[1]] %>%
         .$geometry %>%
         .$location %>%
