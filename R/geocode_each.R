@@ -36,13 +36,13 @@ geocode_each=function(stringlocation,info=c("latlng")){
                                 url_query, sep = "=",
                                 collapse = "&")
       url <- str_c(url_base, url_query_inline)
-      rep=httr::GET(url)
-      if(is.null(rep$results)){
+      repcontent=httr::GET(url) %>%
+        httr::content()
+      if(repcontent$status=="ZERO_RESULTS"){
         result=make_empty_result(info)
       }
-      if(!is.null(rep$results)){
-          repcontent=rep %>%
-            httr::content() %>%
+      if(repcontent$status!="ZERO_RESULTS"){
+           repcontent=repcontent%>%
             .$results
           # latlng
           latlng=repcontent %>%
