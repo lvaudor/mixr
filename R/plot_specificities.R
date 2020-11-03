@@ -13,21 +13,21 @@
 #' data_spec=tidy_specificities(df, word, novel, criterion="top_n",top_n=30)
 #' plot_specificities(data_spec, word, novel)
 plot_specificities=function(spec_data, cat1, cat2){
-  cat1 <- enquo(cat1)
-  cat2 <- enquo(cat2)
+  cat1 <- rlang::enquo(cat1)
+  cat2 <- rlang::enquo(cat2)
   spec_data <- spec_data %>%
-    group_by(!!cat2)
+    dplyr::group_by(!!cat2)
   spec_data <- spec_data %>%
-    arrange(!!cat2,spec)%>%
-    mutate(id=1:length(spec))
-  p=ggplot(spec_data,
-           aes(x=id, y=spec, fill=factor(!!cat2)))+
-    geom_bar(stat="identity", alpha=0.5)+
-    geom_text(aes(label=!!cat1, y=0), hjust=0)+
-    coord_flip()+
-    facet_wrap(vars(!!cat2), scales="free")+
-    scale_x_discrete(breaks=NULL)+
-    theme(legend.position="none")+
-    labs(x=cat1,y="specificity score")
+    dplyr::arrange(!!cat2,spec)%>%
+    dplyr::mutate(id=1:length(spec))
+  p=ggplot2::ggplot(spec_data,
+                    ggplot2::aes(x=id, y=spec, fill=factor(!!cat2)))+
+    ggplot2::geom_bar(stat="identity", alpha=0.5)+
+    ggplot2::geom_text(aes(label=!!cat1, y=0), hjust=0)+
+    ggplot2::coord_flip()+
+    ggplot2::facet_wrap(vars(!!cat2), scales="free")+
+    ggplot2::scale_x_discrete(breaks=NULL)+
+    ggplot2::theme(legend.position="none")+
+    ggplot2::labs(x=cat1,y="specificity score")
   return(p)
 }
