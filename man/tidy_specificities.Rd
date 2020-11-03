@@ -4,8 +4,14 @@
 \alias{tidy_specificities}
 \title{Returns a tibble with specificities according to two crossed categories.}
 \usage{
-tidy_specificities(data, cat1, cat2, criterion = "all", top_n = 50,
-  min_spec = 2)
+tidy_specificities(
+  data,
+  cat1,
+  cat2,
+  criterion = "all",
+  top_n = 50,
+  min_spec = 2
+)
 }
 \arguments{
 \item{data}{a tibble}

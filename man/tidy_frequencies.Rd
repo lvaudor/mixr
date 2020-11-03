@@ -4,8 +4,7 @@
 \alias{tidy_frequencies}
 \title{Returns tibble with frequencies of cat (lemma or word for instance) in data}
 \usage{
-tidy_frequencies(data, cat, criterion = "top_n", top_n = 30,
-  n_min = 10)
+tidy_frequencies(data, cat, criterion = "top_n", top_n = 30, n_min = 10)
 }
 \arguments{
 \item{data}{a tibble}
