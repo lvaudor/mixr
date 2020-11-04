@@ -1,6 +1,5 @@
 #' Geocodes one location through the OSM nominatim API
 #' @param stringlocation a location string
-#' @param key your opencage key
 #' @param info the variables to inform: by default, latlng.
 #' Additional information can be e.g.
 #' #' bounds.northeast.lat
@@ -72,9 +71,9 @@
 # @return tibble with additional columns corresponding to the info required
 #' @export
 #' @examples
-#' geocode_opencage("la Guillotière, Lyon", key=opencage_key,info=c("latlng","components.country_code"))
-geocode_opencage=function(stringlocation, key=opencage_key){
-  rep=opencage::opencage_forward(stringlocation, key=opencage_key)
+#' geocode_opencage("la Guillotière, Lyon",info=c("lat","lng","components.country_code"))
+geocode_opencage=function(stringlocation){
+  rep=opencage::opencage_forward(stringlocation, key=Sys.getenv("OPENCAGE_KEY"))
   rep=rep$results %>%
     dplyr::select(lat=geometry.lat,
                   lng=geometry.lng,

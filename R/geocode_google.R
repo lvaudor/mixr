@@ -16,7 +16,7 @@ geocode_google=function(stringlocation,info=c("lat","lng")){
     stringr::str_replace_all(" +","+") %>%
     URLencode(reserved = FALSE) %>% c(address = .)
   url_query <- c(url_query,
-                 key = google_key)
+                 key = Sys.getenv("GOOGLE_KEY"))
   url_query <- url_query[!is.na(url_query)]
   url_query_inline <- stringr::str_c(names(url_query),
                                      url_query, sep = "=",
