@@ -2,22 +2,24 @@
 % Please edit documentation in R/geocode_each.R
 \name{geocode_each}
 \alias{geocode_each}
-\title{Geocodes one location through the Google API}
+\title{Geocodes one location through the Google API. See  \href{https://developers.google.com/maps/documentation/geocoding/intro#Types}{here} for the list of all possibilities supported by the Google Map geocoding API.}
 \usage{
-geocode_each(stringlocation, info = c("latlng"))
+geocode_each(stringlocation, method, info, ...)
 }
 \arguments{
 \item{stringlocation}{a location string}
 
-\item{info}{the variables to inform: by default, latlng. Information can be e.g. "locality","country","country_code","formatted_address". See https://developers.google.com/maps/documentation/geocoding/intro#Types for the list of all possibilities supported by the Google Map geocoding API.}
+\item{method}{the API to send the request to. Can be "opencage" (default) or "google".}
+
+\item{info}{the variables to inform: by default, c("lat","lng").
+Information can be many other variables depending on the method you are using. Type \code{help(geocode_google)} or \code{help(geocode_opencage)} to see details.}
 }
 \value{
 tibble with additional columns corresponding to the info required
 }
 \description{
-Geocodes one location through the Google API
+Geocodes one location through the Google API. See  \href{https://developers.google.com/maps/documentation/geocoding/intro#Types}{here} for the list of all possibilities supported by the Google Map geocoding API.
 }
 \examples{
-register_google(key="[your key]")
 geocode_each("la Guillotière, Lyon")
 }

@@ -4,14 +4,16 @@
 \alias{tidy_geocode}
 \title{Ads geographical information to a tibble through the use of the the Google API}
 \usage{
-tidy_geocode(data, location, info = c("latlng"))
+tidy_geocode(df, location, info = c("latlng"), method = "opencage")
 }
 \arguments{
-\item{data}{a tibble}
+\item{df}{a tibble}
 
 \item{location}{the variable to geocode}
 
 \item{info}{the variables to inform: by default, latlng. Information can be e.g. "locality","country","country_code","formatted_address". See https://developers.google.com/maps/documentation/geocoding/intro#Types for the list of all possibilities supported by the Google Map geocoding API.}
+
+\item{method}{the API to send the request to. Can be "opencage" (default) or "google".}
 }
 \value{
 tibble with additional columns corresponding to the info required
@@ -20,12 +22,11 @@ tibble with additional columns corresponding to the info required
 Ads geographical information to a tibble through the use of the the Google API
 }
 \examples{
-register_google(key="[your key]")
-df <-tibble(loc=c("Lyon, France",
-                  "22 place du Général de Gaulle, Paris",
-                  "la Guillotière, Lyon",
-                  "Europe",
-                  "Tucson, AZ",
-                  "Rio Grande do Sul"))
-tidy_geocode(df,loc,info=c("latlng","country","locality"))
+df <-tibble(location=c("Lyon, France",
+                       "22 place du Général de Gaulle, Paris",
+                       "la Guillotière, Lyon",
+                       "Europe",
+                       "Tucson, AZ",
+                       "Rio Grande do Sul"))
+tidy_geocode(df,location,method="opencage",...)
 }
