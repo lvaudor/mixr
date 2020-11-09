@@ -4,7 +4,7 @@
 \alias{make_empty_result}
 \title{Make empty line}
 \usage{
-make_empty_result(info)
+make_empty_result(info = c("lat", "lng"))
 }
 \arguments{
 \item{info}{the column names}

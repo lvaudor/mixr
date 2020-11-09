@@ -16,41 +16,45 @@
 #' data_spec=tidy_specificities(df, word, novel)
 
 tidy_specificities=function(data,cat1,cat2, criterion="all", top_n=50, min_spec=2){
-  qcat1 <- enquo(cat1)
-  qcat2 <- enquo(cat2)
-  vcat1=select(data,
-               !!qcat1) %>% pull(1)
-  vcat2=select(data,
-               !!qcat2) %>% pull(1)
+  qcat1 <- rlang::enquo(cat1)
+  qcat2 <- rlang::enquo(cat2)
+  vcat1=data %>%
+    dplyr::select(!!qcat1) %>%
+    dplyr::pull(1)
+  vcat2=data %>%
+    dplyr::select(!!qcat2) %>%
+    dplyr::pull(1)
   freqs=data %>%
-    group_by(!!qcat1,!!qcat2) %>%
-    summarise(n=n()) %>%
-    select(cat1=!!qcat1,
+    dplyr::group_by(!!qcat1,!!qcat2) %>%
+    dplyr::summarise(n=dplyr::n()) %>%
+    dplyr::select(cat1=!!qcat1,
            cat2=!!qcat2,
            n)
-  spe=specificities(table(vcat1,vcat2))
-  spe=bind_cols(cat1=row.names(spe),as_tibble(spe))
+  spe=textometry::specificities(table(vcat1,vcat2))
+  spe=dplyr::bind_cols(cat1=row.names(spe),
+                       tibble::as_tibble(spe,.name_repair="minimal"))
   spe=tidyr::gather(spe,
                     "cat2","spec",
                     -cat1)
   mode(spe$cat1)=mode(vcat1)
   mode(spe$cat2)=mode(vcat2)
-  spe <- spe %>% left_join(freqs, by=c("cat1","cat2"))
-  colnames(spe)=c(colnames(select(data,!!qcat1,!!qcat2)),"spec","n")
-  cat1 <- enquo(cat1)
-  cat2 <- enquo(cat2)
+  spe <- spe %>%
+    dplyr::left_join(freqs, by=c("cat1","cat2"))
+  colnames(spe)=c(colnames(dplyr::select(data,!!qcat1,!!qcat2)),"spec","n")
+  cat1 <- rlang::enquo(cat1)
+  cat2 <- rlang::enquo(cat2)
 
   if(criterion=="top_n"){
     spe <- spe %>%
-      group_by(!!cat2) %>%
-      top_n(top_n,spec) %>%
-      ungroup()
+      dplyr::group_by(!!cat2) %>%
+      dplyr::top_n(top_n,spec) %>%
+      dplyr::ungroup()
   }
   if(criterion=="min_spec"){
     spe <- spe %>%
-      filter(spec>min_spec)
+      dplyr::filter(spec>min_spec)
   }
   spe <- spe %>%
-    arrange(desc(spec))
+    dplyr::arrange(desc(spec))
   return(spe)
 }

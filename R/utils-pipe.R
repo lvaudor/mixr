@@ -1,12 +1,10 @@
 
 #' Make empty line
 #' @param info the column names
-#' @example make_empty_result(info=c("lat","lng"))
-make_empty_result=function(info){
-  result=rep(NA,length(info))
-  names(result)=info
-  result=result %>%
-    dplyr::bind_rows()
+make_empty_result=function(info=c("lat","lng")){
+  result=rep(NA,length(info)+1) %>% t() %>%
+    tibble::as_tibble(.name_repair="minimal")
+  names(result)=c("stringlocation",info)
   return(result)
 }
 

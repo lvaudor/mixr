@@ -2,9 +2,9 @@
 % Please edit documentation in R/tidy_geocode.R
 \name{tidy_geocode}
 \alias{tidy_geocode}
-\title{Ads geographical information to a tibble through the use of the the Google API}
+\title{Returns geographical information as a tibble through the use of a geocoding API}
 \usage{
-tidy_geocode(df, location, info = c("latlng"), method = "opencage")
+tidy_geocode(df, location, info = c("lat", "lng"), method = "opencage")
 }
 \arguments{
 \item{df}{a tibble}
@@ -19,14 +19,16 @@ tidy_geocode(df, location, info = c("latlng"), method = "opencage")
 tibble with additional columns corresponding to the info required
 }
 \description{
-Ads geographical information to a tibble through the use of the the Google API
+Returns geographical information as a tibble through the use of a geocoding API
 }
 \examples{
-df <-tibble(location=c("Lyon, France",
-                       "22 place du Général de Gaulle, Paris",
-                       "la Guillotière, Lyon",
-                       "Europe",
-                       "Tucson, AZ",
-                       "Rio Grande do Sul"))
-tidy_geocode(df,location,method="opencage",...)
+mydf <-tibble(location=c("Lyon, France",
+                         "22 place du Général de Gaulle, Paris",
+                         "la Guillotière, Lyon",
+                         NA,
+                         "Europe",
+                         "Tucson, AZ",
+                         "Rio Grande do Sul",
+                         ""))
+tidy_geocode(mydf,location,method="opencage")
 }

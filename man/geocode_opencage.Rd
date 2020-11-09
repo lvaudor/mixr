@@ -4,81 +4,80 @@
 \alias{geocode_opencage}
 \title{Geocodes one location through the OSM nominatim API}
 \usage{
-geocode_opencage(stringlocation, key = opencage_key)
+geocode_opencage(stringlocation, info = c("lat", "lng"))
 }
 \arguments{
 \item{stringlocation}{a location string}
 
-\item{key}{your opencage key}
-
 \item{info}{the variables to inform: by default, latlng.
 Additional information can be e.g.
-#' bounds.northeast.lat
-bounds.northeast.lng
-bounds.southwest.lat
-bounds.southwest.lng
-components.ISO_3166-1_alpha-2
-components.ISO_3166-1_alpha-3
-components._category
-components._type
-components.boundary
-components.continent
-components.country
-components.country_code
-components.state
-confidence
-formatted
-annotations.FIPS.county
-annotations.FIPS.state
-annotations.currency.disambiguate_symbol
-components.county
-components.state_code
-components.town
-query
-annotations.DMS.lat
-annotations.DMS.lng
-annotations.MGRS
-annotations.Maidenhead
-annotations.Mercator.x
-annotations.Mercator.y
-annotations.OSM.edit_url
-annotations.OSM.note_url
-annotations.OSM.url
-annotations.UN_M49.regions.AFRICA
-annotations.UN_M49.statistical_groupings
-annotations.callingcode
-annotations.currency.alternate_symbols
-annotations.currency.decimal_mark
-annotations.currency.html_entity
-annotations.currency.iso_code
-annotations.currency.iso_numeric
-annotations.currency.name
-annotations.currency.smallest_denomination
-annotations.currency.subunit
-annotations.currency.subunit_to_unit
-annotations.currency.symbol
-annotations.currency.symbol_first
-annotations.currency.thousands_separator
-annotations.flag
-annotations.geohash
-annotations.qibla
-annotations.roadinfo.drive_on
-annotations.roadinfo.speed_in
-annotations.sun.rise.apparent
-annotations.sun.rise.astronomical
-annotations.sun.rise.civil
-annotations.sun.rise.nautical
-annotations.sun.set.apparent
-annotations.sun.set.astronomical
-annotations.sun.set.civil
-annotations.sun.set.nautical
-annotations.timezone.name
-annotations.timezone.now_in_dst
-annotations.timezone.offset_sec
-annotations.timezone.offset_string
-annotations.timezone.short_name
-annotations.what3words.words
-annotations.wikidata}
+\itemize{
+\item bounds.northeast.lat
+\item bounds.northeast.lng
+\item bounds.southwest.lat
+\item bounds.southwest.lng
+\item components.ISO_3166-1_alpha-2
+\item components.ISO_3166-1_alpha-3
+\item components._category
+\item components._type
+\item components.boundary
+\item components.continent
+\item components.country
+\item components.country_code
+\item components.state
+\item confidence
+\item formatted
+\item annotations.FIPS.county
+\item annotations.FIPS.state
+\item annotations.currency.disambiguate_symbol
+\item components.county
+\item components.state_code
+\item components.town
+\item query
+\item annotations.DMS.lat
+\item annotations.DMS.lng
+\item annotations.MGRS
+\item annotations.Maidenhead
+\item annotations.Mercator.x
+\item annotations.Mercator.y
+\item annotations.OSM.edit_url
+\item annotations.OSM.note_url
+\item annotations.OSM.url
+\item annotations.UN_M49.statistical_groupings
+\item annotations.callingcode
+\item annotations.currency.alternate_symbols
+\item annotations.currency.decimal_mark
+\item annotations.currency.html_entity
+\item annotations.currency.iso_code
+\item annotations.currency.iso_numeric
+\item annotations.currency.name
+\item annotations.currency.smallest_denomination
+\item annotations.currency.subunit
+\item annotations.currency.subunit_to_unit
+\item annotations.currency.symbol
+\item annotations.currency.symbol_first
+\item annotations.currency.thousands_separator
+\item annotations.flag
+\item annotations.geohash
+\item annotations.qibla
+\item annotations.roadinfo.drive_on
+\item annotations.roadinfo.speed_in
+\item annotations.sun.rise.apparent
+\item annotations.sun.rise.astronomical
+\item annotations.sun.rise.civil
+\item annotations.sun.rise.nautical
+\item annotations.sun.set.apparent
+\item annotations.sun.set.astronomical
+\item annotations.sun.set.civil
+\item annotations.sun.set.nautical
+\item annotations.timezone.name
+\item annotations.timezone.now_in_dst
+\item annotations.timezone.offset_sec
+\item annotations.timezone.offset_string
+\item annotations.timezone.short_name
+\item annotations.what3words.words
+\item annotations.wikidata
+}}
 }
 \description{
 Geocodes one location through the OSM nominatim API
