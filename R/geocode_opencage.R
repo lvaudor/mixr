@@ -78,12 +78,13 @@ geocode_opencage=function(stringlocation,info=c("lat","lng")){
   rep=opencage::opencage_forward(stringlocation,
                                  key=Sys.getenv("OPENCAGE_KEY"))
   result=rep$results %>%
-    dplyr::select(lat=geometry.lat,
-                  lng=geometry.lng,
+    dplyr::select(lat=.data$geometry.lat,
+                  lng=.data$geometry.lng,
                   dplyr::everything()) %>%
-    dplyr::select(any_of(info)) %>%
+    dplyr::select(dplyr::any_of(info)) %>%
     dplyr::mutate(stringlocation=stringlocation) %>%
-    dplyr::select(stringlocation,dplyr::everything())
+    dplyr::select(stringlocation,
+                  dplyr::everything())
   info_not_provided=info[!(info %in% colnames(result))]
   if(length(info_not_provided)>0){
     complement=matrix(NA_character_,nrow=nrow(result),ncol=length(info_not_provided)) %>%

@@ -4,14 +4,12 @@
 #' @param info the variables to inform: by default, c("lat","lng").
 #' Information can be many other variables depending on the method you are using. Type `help(geocode_google)` or `help(geocode_opencage)` to see details.
 #' @return tibble with additional columns corresponding to the info required
-#' @examples
-#' geocode_each("la Guillotière, Lyon")
-geocode_each=function(stringlocation,method,info=c("lat","lng"),...){
+geocode_each=function(stringlocation,method,info=c("lat","lng")){
     if(method=="google"){
-      result=geocode_google(stringlocation,info=info,...)
+      result=geocode_google(stringlocation,info=info)
     }
     if(method=="opencage"){
-      result=geocode_opencage(stringlocation,info=info,...)
+      result=geocode_opencage(stringlocation,info=info)
     }
   return(result)
 }

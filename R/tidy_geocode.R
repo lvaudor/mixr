@@ -6,14 +6,14 @@
 #' @return tibble with additional columns corresponding to the info required
 #' @export
 #' @examples
-#' mydf <-tibble(location=c("Lyon, France",
-#'                          "22 place du Général de Gaulle, Paris",
-#'                          "la Guillotière, Lyon",
-#'                          NA,
-#'                          "Europe",
-#'                          "Tucson, AZ",
-#'                          "Rio Grande do Sul",
-#'                          ""))
+#' mydf <-tibble::tibble(location=c("Lyon, France",
+#'                                  "22 place du Général de Gaulle, Paris",
+#'                                  "la Guillotière, Lyon",
+#'                                  NA,
+#'                                  "Europe",
+#'                                  "Tucson, AZ",
+#'                                  "Rio Grande do Sul",
+#'                                  ""))
 #' tidy_geocode(mydf,location,method="opencage")
 tidy_geocode=function(df,
                       location,
@@ -24,7 +24,9 @@ tidy_geocode=function(df,
     dplyr::select(!!qlocation) %>%
     dplyr::pull(1)
   result=stringslocations %>%
-    purrr::map_df(geocode_each,info=info, method=method)
+    purrr::map_df(geocode_each,
+                  info=info,
+                  method=method)
   return(result)
 }
 
