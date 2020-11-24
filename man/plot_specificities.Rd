@@ -4,14 +4,14 @@
 \alias{plot_specificities}
 \title{Plot specificities of cat1 (lemma or word) according to cat2 (categories)}
 \usage{
-plot_specificities(spec_data, cat1, cat2)
+plot_specificities(df_spec, cat1, cat2)
 }
 \arguments{
+\item{df_spec}{a tibble with specifictities of cat1 according to cat2}
+
 \item{cat1}{words or lemmas}
 
 \item{cat2}{categories}
-
-\item{data}{a tibble}
 }
 \value{
 a plot
@@ -20,11 +20,16 @@ a plot
 Plot specificities of cat1 (lemma or word) according to cat2 (categories)
 }
 \examples{
-library(janeaustenr)
-df1<- tibble(txt=prideprejudice) \%>\% unnest_tokens(word,txt)
-df2<- tibble(txt=sensesensibility) \%>\% unnest_tokens(word,txt)
-df <- bind_rows(mutate(df1,novel="prideprejudice"),
-                mutate(df2,novel="sensesensibility"))
-data_spec=tidy_specificities(df, word, novel, criterion="top_n",top_n=30)
-plot_specificities(data_spec, word, novel)
+mydf=dplyr::bind_rows(tibble::tibble(txt=janeaustenr::prideprejudice,
+                                     novel="Pride and Prejudice"),
+                      tibble::tibble(txt=janeaustenr::sensesensibility,
+                                     novel="Sense and Sensibility")) \%>\%
+ tidytext::unnest_tokens(word,txt)
+df_spec <- tidy_specificities(mydf,
+                              cat1=word,
+                              cat2=novel,
+                              min_spec=5)
+plot_specificities(df_spec,
+                   cat1=word,
+                   cat2=novel)
 }

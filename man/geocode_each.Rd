@@ -4,7 +4,7 @@
 \alias{geocode_each}
 \title{Geocodes one location through the Google API. See  \href{https://developers.google.com/maps/documentation/geocoding/intro#Types}{here} for the list of all possibilities supported by the Google Map geocoding API.}
 \usage{
-geocode_each(stringlocation, method, info = c("lat", "lng"), ...)
+geocode_each(stringlocation, method, info = c("lat", "lng"))
 }
 \arguments{
 \item{stringlocation}{a location string}
@@ -19,7 +19,4 @@ tibble with additional columns corresponding to the info required
 }
 \description{
 Geocodes one location through the Google API. See  \href{https://developers.google.com/maps/documentation/geocoding/intro#Types}{here} for the list of all possibilities supported by the Google Map geocoding API.
-}
-\examples{
-geocode_each("la Guillotière, Lyon")
 }

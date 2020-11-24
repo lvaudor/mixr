@@ -21,5 +21,10 @@ tibble with additional columns corresponding to the info required
 Geocodes one location through the Google API
 }
 \examples{
-geocode_google("Grande Rue de la Guillotière, Lyon", info=c("lat","lng","country_code","locality","administrative_area_level_1"))
+geocode_google("Grande Rue de la Guillotière, Lyon",
+ info=c("lat",
+        "lng",
+        "country_code",
+        "locality",
+        "administrative_area_level_1"))
 }

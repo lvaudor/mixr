@@ -4,14 +4,16 @@
 \alias{plot_frequencies}
 \title{Returns a plot showing frequencies of cat (lemma or word for instance) in data}
 \usage{
-plot_frequencies(data, cat, frequency, scale = NA)
+plot_frequencies(df_freq, cat, frequency, scale = NA)
 }
 \arguments{
-\item{data}{a tibble with frequencies of cat}
+\item{df_freq}{a tibble with frequencies of cat}
 
 \item{cat}{words or lemmas, for instance}
 
 \item{frequency}{frequency of cat}
+
+\item{scale}{type of transformation (if any) to apply to the x-axis (e.g. "log","sqrt",etc.)}
 }
 \value{
 a plot
@@ -20,8 +22,10 @@ a plot
 Returns a plot showing frequencies of cat (lemma or word for instance) in data
 }
 \examples{
-library(janeaustenr)
-df <- tibble(txt=prideprejudice) \%>\% unnest_tokens(word,txt)
-df_freq <- tidy_frequencies(df, word, criterion="n_min",n_min=500)
-plot_frequencies(df_freq, word,n)
+mydf <- tibble::tibble(txt=janeaustenr::prideprejudice) \%>\%
+    tidytext::unnest_tokens(word,txt)
+df_freq <- tidy_frequencies(mydf, word, min_freq=500)
+plot_frequencies(df_freq,
+                    cat=word,
+                    frequency=freq)
 }

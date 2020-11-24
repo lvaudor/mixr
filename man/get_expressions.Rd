@@ -8,7 +8,18 @@ This function uses the IRaMuTeQ package's dictionnaries.}
 get_expressions(language = "fr")
 }
 \arguments{
-\item{language.}{Can be one of "de" (German),"en" (English),"fr" (French),"gl" (Galician),"gr" (Greek),"it" (Italian),"pt" (Portuguese),"sp" (Spanish),"sw" (Swedish)}
+\item{language}{Can be one of "
+\itemize{
+\item "de" (German),
+\item "en" (English),
+\item "fr" (French),
+\item "gl" (Galician),
+\item "gr" (Greek),
+\item "it" (Italian),
+\item "pt" (Portuguese),
+\item "sp" (Spanish),
+\item "sw" (Swedish)
+}}
 }
 \value{
 tibble with word= word or expression, word_cor= corrected word or expression. For instance, in French, "aujourd'hui" is corrected as "ajourd_hui", and "curriculum vitae" is corrected as "curriculum_vitae".

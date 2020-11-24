@@ -3,7 +3,7 @@
 \name{get_lexicon}
 \alias{get_lexicon}
 \title{Returns a lexicon in a given language.
-This function uses the IRaMuTeQ package's dictionnaries.}
+This function uses the IRaMuTeQ package's dictionaries.}
 \usage{
 get_lexicon(language = "fr")
 }
@@ -22,11 +22,11 @@ get_lexicon(language = "fr")
 }}
 }
 \value{
-tibble with word, lemma and type.
+tibble with word, lemma and type (.
 }
 \description{
 Returns a lexicon in a given language.
-This function uses the IRaMuTeQ package's dictionnaries.
+This function uses the IRaMuTeQ package's dictionaries.
 }
 \details{
 Type: a word (in French lexicon) can be of type:

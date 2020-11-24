@@ -4,18 +4,16 @@
 \alias{tidy_frequencies}
 \title{Returns tibble with frequencies of cat (lemma or word for instance) in data}
 \usage{
-tidy_frequencies(data, cat, criterion = "top_n", top_n = 30, n_min = 10)
+tidy_frequencies(mydf, cat, top_freq = NA, min_freq = NA)
 }
 \arguments{
-\item{data}{a tibble}
+\item{mydf}{a tibble}
 
 \item{cat}{words or lemmas, for instance}
 
-\item{criterion}{should the output be filtered by top specificities by category ('top_n') or according to a minimum value of specificity ("spec_min").}
+\item{top_freq}{how many items by category (filter based on frequency) should be kept. If not provided (the default) everything is kept.}
 
-\item{top_n}{in case criterion=='top_n', how many items by category should be kept (defaults to 50)}
-
-\item{spec_min}{in case criterion=='min_spec', which is the minimum specificity for an item to be kept (defaults to 2)}
+\item{min_freq}{which is the minimum specificity for an item to be kept. If not provided (the default) everything is kept.}
 }
 \value{
 a tibble of cat frequencies
@@ -24,7 +22,7 @@ a tibble of cat frequencies
 Returns tibble with frequencies of cat (lemma or word for instance) in data
 }
 \examples{
-library(janeaustenr)
-df <- tibble(txt=prideprejudice) \%>\% unnest_tokens(word,txt)
-tidy_frequencies(df, word, criterion="n_min",n_min=200)
+mydf <- tibble::tibble(txt=janeaustenr::prideprejudice) \%>\%
+  tidytext::unnest_tokens(word,txt)
+tidy_frequencies(mydf, word, min_freq=200)
 }
