@@ -1,28 +1,30 @@
 #' Returns tibble with frequencies of cat (lemma or word for instance) in data
-#' @param data a tibble
+#' @param mydf a tibble
 #' @param cat words or lemmas, for instance
-#' @param criterion should the output be filtered by top specificities by category ('top_n') or according to a minimum value of specificity ("spec_min").
-#' @param top_n in case criterion=='top_n', how many items by category should be kept (defaults to 50)
-#' @param spec_min in case criterion=='min_spec', which is the minimum specificity for an item to be kept (defaults to 2)
+#' @param top_freq how many items by category (filter based on frequency) should be kept. If not provided (the default) everything is kept.
+#' @param min_freq which is the minimum specificity for an item to be kept. If not provided (the default) everything is kept.
 #' @return a tibble of cat frequencies
 #' @export
 #' @examples
-#' library(janeaustenr)
-#' df <- tibble(txt=prideprejudice) %>% unnest_tokens(word,txt)
-#' tidy_frequencies(df, word, criterion="n_min",n_min=200)
-tidy_frequencies <- function(data, cat, criterion="top_n", top_n=30, n_min=10){
+#' mydf <- tibble::tibble(txt=janeaustenr::prideprejudice) %>%
+#'   tidytext::unnest_tokens(word,txt)
+#' tidy_frequencies(mydf, word, min_freq=200)
+tidy_frequencies <- function(mydf,
+                             cat,
+                             top_freq=NA,
+                             min_freq=NA){
     qcat=rlang::enquo(cat)
-    freq_data <- data %>%
+    freq_data <- mydf %>%
       dplyr::group_by(!!qcat) %>%
-      dplyr::summarise(n=n()) %>%
-      dplyr::arrange(desc(n))
-    if(criterion=="top_n"){
+      dplyr::summarise(freq=dplyr::n()) %>%
+      dplyr::arrange(dplyr::desc(.data$freq))
+    if(!is.na(top_freq)){
       freq_data <- freq_data %>%
-        dplyr::top_n(top_n,n)
+        dplyr::top_n(top_freq)
     }
-    if(criterion=="n_min"){
+    if(!is.na(min_freq)){
       freq_data <- freq_data %>%
-        dplyr::filter(n>=n_min)
+        dplyr::filter(.data$freq>=min_freq)
     }
     return(freq_data)
 }

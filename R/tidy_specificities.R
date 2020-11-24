@@ -1,60 +1,63 @@
 #' Returns a tibble with specificities according to two crossed categories.
-#' @param data a tibble
+#' @param mydf a tibble
 #' @param cat1 a factor corresponding to words or lemmas
 #' @param cat2 a category
-#' @param criterion one of "all" (default), "top_n" or "min_spec": should the information displayed be filtered by top specificities (top_n) or according to a minimum value of specificity (min_spec).
-#' @param top_n in case criterion=='top_n', how many items by category should be kept (defaults to 50)
-#' @param min_spec in case criterion=='min_spec', which is the minimum specificity for an item to be kept (defaults to 2)
+#' @param top_spec how many items by category (filter based on specificity) should be kept. If not provided (the default) everything is kept.
+#' @param min_spec which is the minimum specificity for an item to be kept. If not provided (the default) everything is kept.
 #' @return tibble with additional columns cat1, cat2, spec
 #' @export
 #' @examples
-#' library(janeaustenr)
-#' df1<- tibble(txt=prideprejudice) %>% unnest_tokens(word,txt)
-#' df2<- tibble(txt=sensesensibility) %>% unnest_tokens(word,txt)
-#' df <- bind_rows(mutate(df1,novel="prideprejudice"),
-#'                 mutate(df2,novel="sensesensibility"))
-#' data_spec=tidy_specificities(df, word, novel)
+#'  mydf=dplyr::bind_rows(
+#'          tibble::tibble(txt=janeaustenr::prideprejudice,
+#'          novel="Pride and Prejudice"),
+#'          tibble::tibble(txt=janeaustenr::sensesensibility,
+#'          novel="Sense and Sensibility")) %>%
+#'       tidytext::unnest_tokens(word,txt)
+#'  tidy_specificities(mydf,
+#'                     cat1=word,
+#'                     cat2=novel)
 
-tidy_specificities=function(data,cat1,cat2, criterion="all", top_n=50, min_spec=2){
+tidy_specificities=function(mydf,
+                            cat1,
+                            cat2,
+                            top_spec=NA,
+                            min_spec=NA){
   qcat1 <- rlang::enquo(cat1)
   qcat2 <- rlang::enquo(cat2)
-  vcat1=data %>%
+  vcat1=mydf %>%
     dplyr::select(!!qcat1) %>%
     dplyr::pull(1)
-  vcat2=data %>%
+  vcat2=mydf %>%
     dplyr::select(!!qcat2) %>%
     dplyr::pull(1)
-  freqs=data %>%
+  freqs=mydf %>%
     dplyr::group_by(!!qcat1,!!qcat2) %>%
     dplyr::summarise(n=dplyr::n()) %>%
     dplyr::select(cat1=!!qcat1,
-           cat2=!!qcat2,
-           n)
+                  cat2=!!qcat2,
+                  .data$n)
   spe=textometry::specificities(table(vcat1,vcat2))
   spe=dplyr::bind_cols(cat1=row.names(spe),
-                       tibble::as_tibble(spe,.name_repair="minimal"))
-  spe=tidyr::gather(spe,
-                    "cat2","spec",
-                    -cat1)
-  mode(spe$cat1)=mode(vcat1)
-  mode(spe$cat2)=mode(vcat2)
-  spe <- spe %>%
-    dplyr::left_join(freqs, by=c("cat1","cat2"))
-  colnames(spe)=c(colnames(dplyr::select(data,!!qcat1,!!qcat2)),"spec","n")
-  cat1 <- rlang::enquo(cat1)
-  cat2 <- rlang::enquo(cat2)
-
-  if(criterion=="top_n"){
+                       tibble::as_tibble(spe,
+                                         .name_repair="minimal")) %>%
+      tidyr::gather("cat2","spec",
+                    -cat1) %>%
+      dplyr::mutate(cat1=format(.data$cat1,as=mode(vcat1)),
+                    cat2=format(.data$cat2,as=mode(vcat2))) %>%
+      dplyr::left_join(freqs, by=c("cat1","cat2"))
+  if(!is.na(top_spec)){
     spe <- spe %>%
-      dplyr::group_by(!!cat2) %>%
-      dplyr::top_n(top_n,spec) %>%
+      dplyr::group_by(cat2) %>%
+      dplyr::top_n(top_spec,.data$spec) %>%
       dplyr::ungroup()
   }
-  if(criterion=="min_spec"){
+  if(!is.na(min_spec)){
     spe <- spe %>%
-      dplyr::filter(spec>min_spec)
+      dplyr::filter(.data$spec>min_spec)
   }
   spe <- spe %>%
-    dplyr::arrange(desc(spec))
+    dplyr::arrange(dplyr::desc(.data$spec)) %>%
+    purrr::set_names(c(colnames(dplyr::select(mydf,!!qcat1,!!qcat2)),
+                       "spec","n"))
   return(spe)
 }
