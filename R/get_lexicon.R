@@ -1,5 +1,5 @@
 #' Returns a lexicon in a given language.
-#' This function uses the IRaMuTeQ package's dictionnaries.
+#' This function uses the IRaMuTeQ package's dictionaries.
 #' @param language Can be one of "
 #' * "de" (German),
 #' * "en" (English),
@@ -10,7 +10,7 @@
 #' * "pt" (Portuguese),
 #' * "sp" (Spanish),
 #' * "sw" (Swedish)
-#' @return tibble with word, lemma and type.
+#' @return tibble with word, lemma and type (.
 #' @details Type: a word (in French lexicon) can be of type:
 #' * adj: adjective
 #'    + adj_dem: demonstrative adjective
