@@ -1,10 +1,9 @@
-#' \code{mixr} package
-#'
-#' A package that mixes a few tools to analyse texts
+#' @title \code{mixr} package
+#' @details Functions to simplify text analysis with multiple languages.
+#' Uses Lexique382 dictionnaries (French lexicon and expressions) and Iramuteq's dictionnaries for other languages.
 #'
 #' See the README on
-#' \href{https://cran.r-project.org/package=mixr/README.html}{CRAN}
-#' or \href{https://github.com/lvaudor/mixr#readme}{GitHub}
+#' \href{https://github.com/lvaudor/mixr#readme}{GitHub}
 #'
 #' @docType package
 #' @name mixr
