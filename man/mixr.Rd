@@ -5,9 +5,7 @@
 \alias{mixr}
 \title{\code{mixr} package}
 \description{
-Functions to simplify text mining with multiple languages
-A package that mixes a few tools to analyse texts.
-Uses Lexique382 dictionnaries (French lexicon and expressions) and Iramuteq's dictionnaries for other languages.
+A package that mixes a few tools to analyse texts
 }
 \details{
 See the README on
