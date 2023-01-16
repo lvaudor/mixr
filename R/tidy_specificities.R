@@ -35,16 +35,15 @@ tidy_specificities=function(mydf,
     dplyr::summarise(n=dplyr::n()) %>%
     dplyr::select(cat1=!!qcat1,
                   cat2=!!qcat2,
-                  .data$n)
+                  n)
   spe=textometry::specificities(table(vcat1,vcat2))
   spe=dplyr::bind_cols(cat1=row.names(spe),
                        tibble::as_tibble(spe,
                                          .name_repair="minimal")) %>%
       tidyr::gather("cat2","spec",
                     -cat1) %>%
-      dplyr::mutate(cat1=format(.data$cat1,as=mode(vcat1)),
-                    cat2=format(.data$cat2,as=mode(vcat2))) %>%
       dplyr::left_join(freqs, by=c("cat1","cat2"))
+  print(spe)
   if(!is.na(top_spec)){
     spe <- spe %>%
       dplyr::group_by(cat2) %>%

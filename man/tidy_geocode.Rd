@@ -11,7 +11,9 @@ tidy_geocode(df, location, info = c("lat", "lng"), method = "opencage")
 
 \item{location}{the variable to geocode}
 
-\item{info}{the variables to inform: by default, latlng. Information can be e.g. "locality","country","country_code","formatted_address". See https://developers.google.com/maps/documentation/geocoding/intro#Types for the list of all possibilities supported by the Google Map geocoding API.}
+\item{info}{the variables to inform
+Information can be many other variables depending on the method you are using.
+Type \code{help(geocode_google)} or \code{help(geocode_opencage)} (according to the method you wish to use) to see details.}
 
 \item{method}{the API to send the request to. Can be "opencage" (default) or "google".}
 }
