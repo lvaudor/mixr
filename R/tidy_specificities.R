@@ -43,7 +43,6 @@ tidy_specificities=function(mydf,
       tidyr::gather("cat2","spec",
                     -cat1) %>%
       dplyr::left_join(freqs, by=c("cat1","cat2"))
-  print(spe)
   if(!is.na(top_spec)){
     spe <- spe %>%
       dplyr::group_by(cat2) %>%
