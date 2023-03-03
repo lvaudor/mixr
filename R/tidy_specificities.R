@@ -46,7 +46,7 @@ tidy_specificities=function(mydf,
   if(!is.na(top_spec)){
     spe <- spe %>%
       dplyr::group_by(cat2) %>%
-      dplyr::top_n(top_spec,.data$spec) %>%
+      dplyr::slice_max(order_by=.data$spec,n=top_spec,with_ties=FALSE) %>%
       dplyr::ungroup()
   }
   if(!is.na(min_spec)){
