@@ -39,16 +39,8 @@
 #' @examples
 #' fr_expr=get_lexicon("fr")
 get_lexicon=function(language="fr"){
-  root=find.package("mixr")
-  lexicon <- suppressMessages(suppressWarnings(
-    readr::read_delim(stringr::str_c(root,
-                                     "/dictionnaires/lexique_",
-                                     language,
-                                     ".txt"),
-                      "\t", escape_double = FALSE, col_names = FALSE,
-                      trim_ws = TRUE)
-  ))
-  lexicon <- dplyr::select(lexicon, 1:3)
-  colnames(lexicon)=c("word","lemma","type")
+  lexicon=paste0("lexicon_",language)
+  data(list=lexicon)
+  lexicon=get(lexicon)
   return(lexicon)
 }
