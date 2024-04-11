@@ -10,22 +10,29 @@
 #'     tidytext::unnest_tokens(word,txt)
 #' df_freq <- tidy_frequencies(mydf, word, min_freq=500)
 #' plot_frequencies(df_freq,
-#'                     cat=word,
-#'                     frequency=freq)
-plot_frequencies=function(df_freq,cat, frequency,scale=NA){
-  qcat=rlang::enquo(cat)
-  df_freq <- df_freq %>%
-    dplyr::arrange(.data$freq) %>%
-    dplyr::mutate(id=1:length(.data$freq))
-  p=ggplot2::ggplot(df_freq,
-           ggplot2::aes(x=.data$id,y=.data$freq)) +
-    ggplot2::geom_bar(stat="identity", alpha=0.5, fill="turquoise")+
-    ggplot2::geom_text(ggplot2::aes(label=!!qcat, y=0), hjust=0)+
-    ggplot2::coord_flip()+
-    ggplot2::scale_x_discrete(breaks=NULL)+
-    ggplot2::labs(x=qcat,y="frequency")
-  if(!is.na(scale)){
-    p=p+ggplot2::scale_y_continuous(trans=scale)
+#'                  cat=word,
+#'                  frequency=freq)
+plot_frequencies=function(df_freq, cat, frequency, scale=NA, fill=NULL, fill_fixed="grey50"){
+  fill=rlang::enquo(fill)
+  cat=rlang::enquo(cat)
+  frequency=rlang::enquo(frequency)
+  p = ggplot2::ggplot(df_freq,
+                      ggplot2::aes(x = forcats::fct_reorder({{cat}},{{frequency}}),
+                                   y = {{frequency}}))
+  if(!rlang::quo_is_null(fill)){
+    p=p + ggplot2::geom_col(ggplot2::aes(fill={{fill}}),
+                            alpha=0.5)
+  }else{
+    p=p + ggplot2::geom_col(fill=fill_fixed,
+                            alpha=0.5)
   }
+  p = p +
+    ggplot2::coord_flip() +
+    ggplot2::geom_text(ggplot2::aes(x={{cat}}, y = 0,
+                                    label = {{cat}}),
+                       hjust = 0) +
+    ggplot2::theme(axis.text.y = ggplot2::element_blank(),
+                   axis.ticks.y = ggplot2::element_blank()) +
+    ggplot2::xlab(rlang::enquo(cat))
   return(p)
 }

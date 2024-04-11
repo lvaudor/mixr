@@ -1,5 +1,5 @@
 #' Returns a lexicon in a given language.
-#' This function uses the IRaMuTeQ package's dictionaries.
+#' This function uses the IRaMuTeQ package's dictionaries. The english lexicon have been supplemented by a set of words with unspecified type.
 #' @param language Can be one of "
 #' * "de" (German),
 #' * "en" (English),

@@ -17,5 +17,12 @@ usethis::use_data(lexicon_it)
 usethis::use_data(lexicon_gr)
 usethis::use_data(lexicon_gl)
 usethis::use_data(lexicon_fr)
-usethis::use_data(lexicon_en)
 usethis::use_data(lexicon_de)
+
+
+lexicon_en_missing=readr::read_csv("data-raw/dictionnaires/missing_words_lexicon_en.csv") %>%
+  mutate(type="unspecified")
+lexicon_en=lexicon_en %>%
+  bind_rows(lexicon_en_missing) %>%
+  arrange(word,lemma)
+usethis::use_data(lexicon_en, overwrite=TRUE)
