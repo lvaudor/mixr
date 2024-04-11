@@ -4,14 +4,14 @@
 \alias{plot_words}
 \title{Plot a metric according to word (for instance, frequencies)}
 \usage{
-plot_words(df, x, y, fill = NULL, fill_fixed = "grey50")
+plot_words(df, words, metric, fill = NULL, fill_fixed = "grey50")
 }
 \arguments{
 \item{df}{a tibble with words (or any string to be displayed) and metric (frequency for instance)}
 
-\item{x}{the name of the column with words}
+\item{words}{the name of the column with words}
 
-\item{y}{the name of the column with the considered metric}
+\item{metric}{the name of the column with the considered metric}
 }
 \value{
 a plot
@@ -24,9 +24,9 @@ mydf=dplyr::bind_rows(tibble::tibble(txt=janeaustenr::prideprejudice,
                                      novel="Pride and Prejudice"),
                       tibble::tibble(txt=janeaustenr::sensesensibility,
                                      novel="Sense and Sensibility")) \%>\%
- tidytext::unnest_tokens(word,txt)
+  tidytext::unnest_tokens(word,txt)
 df_freq <- tidy_frequencies(mydf,
                             cat=word,
-                            min_freq=10)
+                            top_freq=20)
 plot_words(df_freq,word,freq)
 }

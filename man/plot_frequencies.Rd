@@ -4,7 +4,14 @@
 \alias{plot_frequencies}
 \title{Returns a plot showing frequencies of cat (lemma or word for instance) in data}
 \usage{
-plot_frequencies(df_freq, cat, frequency, scale = NA)
+plot_frequencies(
+  df_freq,
+  cat,
+  frequency,
+  scale = NA,
+  fill = NULL,
+  fill_fixed = "grey50"
+)
 }
 \arguments{
 \item{df_freq}{a tibble with frequencies of cat}
@@ -26,6 +33,6 @@ mydf <- tibble::tibble(txt=janeaustenr::prideprejudice) \%>\%
     tidytext::unnest_tokens(word,txt)
 df_freq <- tidy_frequencies(mydf, word, min_freq=500)
 plot_frequencies(df_freq,
-                    cat=word,
-                    frequency=freq)
+                 cat=word,
+                 frequency=freq)
 }
