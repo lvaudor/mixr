@@ -17,11 +17,21 @@
 #' plot_specificities(df_spec,
 #'                    cat1=word,
 #'                    cat2=novel)
-plot_specificities=function(df_spec, cat1, cat2){
+#' plot_specificities(df_spec,
+#'                    cat1=word,
+#'                    cat2=novel,
+#'                    show="frequency")
+plot_specificities=function(df_spec, cat1, cat2, show="specificity"){
   cat1 <- rlang::enquo(cat1)
   cat2 <- rlang::enquo(cat2)
+  labelx=cat1
+  labely=switch(show, "specificity"="specificity score", "frequency"="frequency")
   df_spec <- df_spec %>%
     dplyr::group_by(!!cat2)
+  if(show=="frequency"){
+    df_spec=df_spec |>
+      dplyr::mutate(spec=n)
+  }
   df_spec <- df_spec %>%
     dplyr::arrange(!!cat2,.data$spec)%>%
     dplyr::mutate(id=1:length(.data$spec))
@@ -35,6 +45,6 @@ plot_specificities=function(df_spec, cat1, cat2){
     ggplot2::facet_wrap(ggplot2::vars(!!cat2), scales="free")+
     ggplot2::scale_x_discrete(breaks=NULL)+
     ggplot2::theme(legend.position="none")+
-    ggplot2::labs(x=cat1,y="specificity score")
+    ggplot2::labs(x=labelx, y=labely)
   return(p)
 }

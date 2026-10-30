@@ -15,13 +15,19 @@
 #'       tidytext::unnest_tokens(word,txt)
 #'  tidy_specificities(mydf,
 #'                     cat1=word,
-#'                     cat2=novel)
-
+#'                     cat2=novel,
+#'                     top_spec=5)
+#'  tidy_specificities(mydf,
+#'                     cat1=word,
+#'                     cat2=novel,
+#'                     min_n=400)
 tidy_specificities=function(mydf,
                             cat1,
                             cat2,
                             top_spec=NA,
-                            min_spec=NA){
+                            min_spec=NA,
+                            top_n=NA,
+                            min_n=NA){
   qcat1 <- rlang::enquo(cat1)
   qcat2 <- rlang::enquo(cat2)
   vcat1=mydf %>%
@@ -52,6 +58,16 @@ tidy_specificities=function(mydf,
   if(!is.na(min_spec)){
     spe <- spe %>%
       dplyr::filter(.data$spec>min_spec)
+  }
+  if(!is.na(top_n)){
+    spe <- spe %>%
+      dplyr::group_by(cat2) %>%
+      dplyr::slice_max(order_by=.data$n,n=top_n,with_ties=FALSE) %>%
+      dplyr::ungroup()
+  }
+  if(!is.na(min_n)){
+    spe <- spe %>%
+      dplyr::filter(.data$n>min_n)
   }
   spe <- spe %>%
     dplyr::arrange(dplyr::desc(.data$spec)) %>%
